@@ -15,6 +15,9 @@ const Header: React.FC = () => (
 						Crea tu Pizza
 					</Link>
 				</li>
+				<li>
+					<Link to={'/dashboard'}>Dashboard</Link>
+				</li>
 			</ul>
 		</nav>
 	</header>

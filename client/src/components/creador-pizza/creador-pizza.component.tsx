@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect, FormEvent, useState } from 'react';
+import axios from 'axios';
 
 import './creador-pizza.styles.scss';
 
@@ -46,18 +47,30 @@ const CreadorPizza: React.FC = () => {
 			if (telefono.length !== 7 && telefono.length !== 10)
 				alert('Porfavor ingresa un telefono valido');
 			const body = {
-				nombre,
+				nombre_cliente: nombre,
 				telefono,
 				nombre_pizza: pizza.nombre,
 				precio: pizza.precio,
-				fecha: Date.now(),
 			};
 			console.log({ body });
-			setSubmit(false);
-			setNombre('');
-			setTelefono('');
-			setPedidoEnviado('Pedido Creado!');
-			dispatch(limpiarPedido);
+			axios({
+				url: '/pedidos',
+				method: 'post',
+				data: body,
+			})
+				.then((res: { data: { message: string } }) => {
+					console.log(res);
+					alert(res.data.message);
+					setSubmit(false);
+					setNombre('');
+					setTelefono('');
+					setPedidoEnviado('Pedido Creado!');
+					dispatch(limpiarPedido);
+				})
+				.catch(err => {
+					console.log('Payment error: ', err);
+					alert('Ocurrio un problema procesando tu pedido.');
+				});
 		}
 	}, [submit, nombre, telefono, pizza]);
 
@@ -104,7 +117,8 @@ const CreadorPizza: React.FC = () => {
 				<hr />
 				<div className='resumen-total'>
 					<div>
-						<strong>Nombre de tu Pizza:</strong> {pizza.nombre}
+						<strong>Nombre de tu Pizza:</strong>
+						{` ${pizza.nombre || 'Pizza del Pasado'}`}
 					</div>
 					<div>
 						<strong>Total a Pagar:</strong> $
