@@ -57,6 +57,7 @@ const CreadorPizza: React.FC = () => {
 				telefono,
 				nombre_pizza: pizza.nombre,
 				precio: pizza.precio,
+				ingredientes: pizza.ingredientes,
 			};
 			console.log({ body });
 			axios({

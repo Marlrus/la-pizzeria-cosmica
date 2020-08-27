@@ -4,6 +4,7 @@ import { Pedido } from '../../types/pedido.types';
 
 import './dashboard.styles.scss';
 import TablaDetalles from '../../components/tabla-detalles/tabla-detalles';
+import { formatearPedidos } from '../../utils/utils';
 
 interface Response {
 	data: Pedido[];
@@ -28,13 +29,13 @@ const Dashboard: React.FC = () => {
 		'telefono',
 	];
 
-	const formatearPedidos = (pedidos: Pedido[]) => {
-		return pedidos.map(pedido => ({
-			...pedido,
-			fecha: new Date(pedido.fecha).toLocaleDateString('es-CO'),
-			precio: `$${pedido.precio.toLocaleString()}`,
-		}));
-	};
+	// const formatearPedidos = (pedidos: Pedido[]) => {
+	// 	return pedidos.map(pedido => ({
+	// 		...pedido,
+	// 		fecha: new Date(pedido.fecha).toLocaleDateString('es-CO'),
+	// 		precio: `$${pedido.precio.toLocaleString()}`,
+	// 	}));
+	// };
 
 	return (
 		<div>

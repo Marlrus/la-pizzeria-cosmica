@@ -5,4 +5,10 @@ export interface Pedido {
 	precio: number;
 	telefono: number;
 	_id: string;
+	ingredientes: [
+		{
+			nombre: string;
+			precio: number;
+		},
+	];
 }

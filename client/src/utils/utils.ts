@@ -1,3 +1,5 @@
+import { Pedido } from '../types/pedido.types';
+
 export const capitalizarPalabras = (words: string) =>
 	words
 		.split(' ')
@@ -14,4 +16,21 @@ export const generarNombrePizza = (
 			'',
 		);
 	return `${nombrePizza[0].toUpperCase()}${nombrePizza.slice(1)}`;
+};
+
+const formatearIngredientes = (pedido: Pedido) =>
+	pedido.ingredientes.map(ingrediente => ({
+		...ingrediente,
+		precio: `$${ingrediente.precio.toLocaleString()}`,
+	}));
+
+export const formatearPedido = (pedido: Pedido) => ({
+	...pedido,
+	fecha: new Date(pedido.fecha).toLocaleDateString('es-CO'),
+	precio: `$${pedido.precio.toLocaleString()}`,
+	ingredientes: formatearIngredientes(pedido),
+});
+
+export const formatearPedidos = (pedidos: Pedido[]) => {
+	return pedidos.map(formatearPedido);
 };
