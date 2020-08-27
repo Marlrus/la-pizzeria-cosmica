@@ -7,13 +7,14 @@
 
 	.header-nav {
 		display: flex;
-		height: 70px;
+		height: 80px;
 		align-items: center;
 		min-width: 60%;
 
 		.header-logo {
 			width: 50px;
 			animation: logo-spin infinite 20s linear;
+			margin-right: 10px;
 		}
 
 		ul {
