@@ -1,13 +1,14 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 
 import './creador-pizza.styles.scss';
 
-import { stateInicial } from './pizza.types';
+import { stateInicial, CreadorPizzaState } from './pizza.types';
 import { creadorPizzaReducer } from './creador-pizza.reducer';
 
 import {
 	agregarIngrediente,
 	removerIngrediente,
+	recuperarPizza,
 } from './creador-pizza.reducer';
 
 import { capitalizarPalabras } from '../../utils/utils';
@@ -17,6 +18,16 @@ const CreadorPizza: React.FC = () => {
 		creadorPizzaReducer,
 		stateInicial,
 	);
+
+	useEffect(() => {
+		const creadorState: string | null = localStorage.getItem('pizzaState');
+		if (!creadorState) return;
+		dispatch(recuperarPizza(JSON.parse(creadorState) as CreadorPizzaState));
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem('pizzaState', JSON.stringify(creadorState));
+	}, [creadorState]);
 
 	const { ingredientes, pizza } = creadorState;
 

@@ -12,7 +12,7 @@ const Header: React.FC = () => (
 				<li>
 					<Link to={'/'} style={{ display: 'flex', alignItems: 'center' }}>
 						<img src={logo} className='header-logo' alt='logo' />
-						Arma tu Pizza
+						Crea tu Pizza
 					</Link>
 				</li>
 			</ul>

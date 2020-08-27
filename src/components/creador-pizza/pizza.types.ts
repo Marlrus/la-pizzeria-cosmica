@@ -5,7 +5,7 @@ export interface Ingrediente {
 
 type ListaIngredientes = Ingrediente[];
 
-interface Pizza {
+export interface Pizza {
 	nombre: string;
 	ingredientes: Ingrediente[];
 	precio: number;

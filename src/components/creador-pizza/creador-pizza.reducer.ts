@@ -6,6 +6,7 @@ export const ActionTypes = {
 	AGREGAR_INGREDIENTE: 'AGREGAR_INGREDIENTE',
 	REMOVER_INGREDIENTE: 'REMOVER_INGREDIENTE',
 	ACTUALIZAR_PRECIO: 'ACTUALIZAR_PRECIO',
+	RECUPERAR_PIZZA: 'RECUPERAR_PIZZA',
 } as const;
 
 export const agregarIngrediente = (nombre: string, precio: number) => ({
@@ -22,6 +23,11 @@ export const actualizarPrecio = {
 	type: ActionTypes.ACTUALIZAR_PRECIO,
 };
 
+export const recuperarPizza = (state: CreadorPizzaState) => ({
+	type: ActionTypes.RECUPERAR_PIZZA,
+	payload: state,
+});
+
 const precioPizza = (ingredientes: Ingrediente[]) => {
 	const precio = ingredientes.reduce(
 		(total, ingrediente) => (total += ingrediente.precio),
@@ -30,9 +36,11 @@ const precioPizza = (ingredientes: Ingrediente[]) => {
 	console.log({ precio });
 	return precio;
 };
+
 type CreadorActions =
 	| ReturnType<typeof agregarIngrediente>
 	| ReturnType<typeof removerIngrediente>
+	| ReturnType<typeof recuperarPizza>
 	| typeof actualizarPrecio;
 
 export const creadorPizzaReducer: Reducer<CreadorPizzaState, CreadorActions> = (
@@ -61,7 +69,7 @@ export const creadorPizzaReducer: Reducer<CreadorPizzaState, CreadorActions> = (
 		}
 		case ActionTypes.REMOVER_INGREDIENTE: {
 			if (action.payload.nombre === 'masa') return state;
-			const ingrediente = ingredientes.filter(
+			const ingrediente = pizza.ingredientes.filter(
 				({ nombre }) => nombre === action.payload.nombre,
 			);
 			const ingredientesPizza = pizza.ingredientes.filter(
@@ -89,6 +97,8 @@ export const creadorPizzaReducer: Reducer<CreadorPizzaState, CreadorActions> = (
 					precio: precioPizza(state.pizza.ingredientes),
 				},
 			};
+		case ActionTypes.RECUPERAR_PIZZA:
+			return action.payload;
 		default:
 			return state;
 	}
