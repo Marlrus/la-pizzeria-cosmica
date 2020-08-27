@@ -39,6 +39,24 @@
 	}
 }
 
+.contenedor-central {
+	grid-row: 1;
+	grid-column: 2;
+}
+
+.contenedor-izq {
+	grid-row: 1;
+	grid-column: 1;
+}
+.contenedor-der {
+	grid-row: 1;
+	grid-column: 3;
+}
+
+.contenedor-izq-central {
+	grid-row: 1;
+	grid-column: 1 / 3;
+}
 .App-link {
 	color: #61dafb;
 }

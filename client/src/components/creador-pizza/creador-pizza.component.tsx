@@ -44,8 +44,14 @@ const CreadorPizza: React.FC = () => {
 
 	useEffect(() => {
 		if (submit) {
-			if (telefono.length !== 7 && telefono.length !== 10)
-				alert('Porfavor ingresa un telefono valido');
+			if (telefono.length !== 7 && telefono.length !== 10) {
+				setSubmit(false);
+				return alert('Porfavor ingresa un telefono valido');
+			}
+			if (pizza.ingredientes.length === 1) {
+				setSubmit(false);
+				return alert('Porfavor agregar ingredientes.');
+			}
 			const body = {
 				nombre_cliente: nombre,
 				telefono,

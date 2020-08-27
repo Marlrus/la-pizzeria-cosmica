@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from './pages/home/home.page';
 import Header from './components/header/header.component';
 import Dashboard from './pages/dashboard/dashboard';
+import PedidoDetalles from './pages/pedido-detalles/pedido-detalles.page';
 
 function App() {
 	return (
@@ -12,7 +13,8 @@ function App() {
 			<Header />
 			<Switch>
 				<Route exact path='/' component={HomePage} />
-				<Route exact path='/dashboard' component={Dashboard} />
+				<Route exact path='/pedidos' component={Dashboard} />
+				<Route path='/pedidos/:pedido_id' component={PedidoDetalles} />
 			</Switch>
 		</div>
 	);

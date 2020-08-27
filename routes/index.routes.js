@@ -17,10 +17,19 @@ router.get('/pedidos', async (req, res) => {
 	res.send(pedidos);
 });
 
+router.get('/pedidos/:_id', async (req, res) => {
+	try {
+		console.log('pedidos show');
+		const pedido = await Pedido.findById(req.params._id);
+		if (!pedido) throw err;
+		res.send(pedido);
+	} catch (err) {
+		res.send(err.message);
+	}
+});
+
 router.post('/pedidos', async (req, res) => {
-	console.log(req.body);
-	const pedido = await Pedido.create(req.body);
-	console.log(pedido);
+	await Pedido.create(req.body);
 	res.send({ message: 'Pedido Creado!' });
 });
 
