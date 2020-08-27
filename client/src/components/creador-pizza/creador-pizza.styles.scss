@@ -1,0 +1,134 @@
+.contenedor-creacion-pizza {
+	h3,
+	h2 {
+		text-align: center;
+		margin-top: 1em;
+	}
+
+	.listas-creacion {
+		background-color: #ffffff;
+		padding: 1em;
+		padding-top: 2em;
+		display: flex;
+		border-radius: 20px;
+		-webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
+		-moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
+		box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
+		margin-bottom: 2em;
+
+		ul {
+			width: 50%;
+
+			li {
+				padding: 0.5em;
+				padding-left: 1em;
+				display: flex;
+				justify-content: space-between;
+				border-radius: 20px;
+
+				button {
+					cursor: pointer;
+					border: none;
+					border-radius: 10px;
+					background-color: transparent;
+					font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+						Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+						Helvetica Neue, sans-serif;
+					font-weight: bold;
+					color: rgb(255, 111, 111);
+
+					&:hover {
+						background-color: rgb(255, 203, 203);
+					}
+				}
+			}
+		}
+
+		.seleccionar-ingredientes {
+			cursor: pointer;
+
+			li {
+				&:hover {
+					background-color: rgb(240, 240, 240);
+				}
+			}
+
+			.seleccionado {
+				background-color: #bcffcd;
+
+				&:hover {
+					background-color: #a9e4b8;
+				}
+			}
+		}
+	}
+
+	.resumen-de-pedido {
+		background-color: white;
+		padding: 0.4em;
+		margin-bottom: 3em;
+		border-radius: 20px;
+		-webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
+		-moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
+		box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
+		text-align: center;
+		font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+			Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+		hr {
+			width: 95%;
+			margin: 1em auto;
+		}
+
+		.resumen-total {
+			display: flex;
+			justify-content: space-evenly;
+			background-color: rgb(241, 241, 241);
+			border-radius: 20px;
+			font-size: 20px;
+
+			div {
+				padding: 1em;
+			}
+		}
+
+		.contenedor-inputs {
+			display: flex;
+			justify-content: space-evenly;
+
+			label {
+				font-weight: bold;
+			}
+
+			input {
+				margin-top: 0.5em;
+				border-radius: 10px;
+				border: 2px solid rgb(172, 172, 172);
+				padding: 0.2em;
+			}
+		}
+
+		button {
+			padding-top: 0.8em;
+			padding-bottom: 0.8em;
+			padding-left: 1.5em;
+			padding-right: 1.5em;
+			background-color: rgb(124, 1, 255);
+			color: white;
+			font-size: 20px;
+			border: unset;
+			border-radius: 2em;
+			font-weight: bold;
+
+			&:hover {
+				background-color: rgb(97, 0, 201);
+			}
+		}
+
+		p {
+			margin-top: 1em;
+			font-size: 20px;
+			color: green;
+		}
+	}
+}

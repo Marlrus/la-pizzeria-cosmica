@@ -1,0 +1,38 @@
+.banner {
+	width: 100vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	height: auto;
+	background-color: rgb(44, 44, 44);
+	background-image: url('../../pizzeria-cosmica-logo.svg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	.banner-contenido {
+		text-align: center;
+		margin-top: 4em;
+		margin-bottom: 4em;
+		background-color: rgba(255, 255, 255, 0.6);
+		border-radius: 25px;
+		box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
+		padding: 3em;
+
+		// h1 {
+		// 	margin-top: 0.5em;
+		// 	margin-left: 1em;
+		// 	margin-right: 1em;
+		// }
+		p {
+			margin-bottom: unset;
+		}
+	}
+}
+
+.contenedor-central {
+	grid-row: 1;
+	grid-column: 2;
+}
