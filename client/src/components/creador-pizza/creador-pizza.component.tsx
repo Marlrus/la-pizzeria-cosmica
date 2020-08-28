@@ -13,6 +13,7 @@ import {
 } from './creador-pizza.reducer';
 
 import { capitalizarPalabras } from '../../utils/utils';
+import { UsuarioDB } from '../../types/user-auth.types';
 
 const CreadorPizza: React.FC = () => {
 	const [creadorState, dispatch] = useReducer(
@@ -27,8 +28,16 @@ const CreadorPizza: React.FC = () => {
 
 	useEffect(() => {
 		const creadorState: string | null = localStorage.getItem('pizzaState');
-		if (!creadorState) return;
-		dispatch(recuperarPizza(JSON.parse(creadorState) as CreadorPizzaState));
+		if (creadorState)
+			dispatch(
+				recuperarPizza(JSON.parse(creadorState) as CreadorPizzaState),
+			);
+		const usuarioState: string | null = localStorage.getItem('usuario-state');
+		if (usuarioState) {
+			const { nombre, telefono } = JSON.parse(usuarioState) as UsuarioDB;
+			setNombre(nombre);
+			setTelefono(telefono);
+		}
 	}, []);
 
 	useEffect(() => {

@@ -34,3 +34,19 @@ export const formatearPedido = (pedido: Pedido) => ({
 export const formatearPedidos = (pedidos: Pedido[]) => {
 	return pedidos.map(formatearPedido);
 };
+
+export const pipe = <In, Out>(...fns: Function[]) => (x: In): Out => {
+	const [head, ...tail] = fns;
+	const res = head(x);
+
+	return tail.length > 0 ? pipe(...tail)(res) : res;
+};
+
+type FilterCBFn<T> = (value: T, index: number, array: T[]) => boolean;
+
+export const filter = <T>(fn: FilterCBFn<T>) => (x: T[]) => x.filter(fn);
+
+export const logger = <T>(x: T) => {
+	console.log(x);
+	return x;
+};

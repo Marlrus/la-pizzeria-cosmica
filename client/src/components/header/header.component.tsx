@@ -12,12 +12,10 @@ const Header: React.FC = () => {
 	const usuario = useContext(UserAuthContext);
 	const { admin, autenticado, setUsuario } = usuario;
 
-	console.log(usuario);
-
 	const logoutHandler = () => setLogout(true);
 
 	useEffect(() => {
-		console.log(logout);
+		console.log('In effect');
 		if (logout) {
 			axios({
 				method: 'get',
@@ -25,7 +23,7 @@ const Header: React.FC = () => {
 				withCredentials: true,
 			})
 				.then(res => {
-					localStorage.removeItem('user-state');
+					localStorage.removeItem('usuario-state');
 					setUsuario!({
 						autenticado: false,
 						admin: false,

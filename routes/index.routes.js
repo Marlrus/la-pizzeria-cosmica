@@ -13,6 +13,7 @@ router.get('/service-worker.js', (req, res) => {
 
 router.get('/pedidos', middleware.authCheck, async (req, res) => {
 	try {
+		console.log('En pedidos GET');
 		const pedidos = await Pedido.find({});
 		if (!pedidos) throw err;
 		res.send(pedidos);
