@@ -33,10 +33,8 @@ router.get('/pedidos/:_id', async (req, res) => {
 	}
 });
 
-router.post('/pedidos', middleware.authCheck, async (req, res) => {
+router.post('/pedidos', async (req, res) => {
 	try {
-		// console.log('req.user._id');
-		// console.log(req.user._id);
 		await Pedido.create(req.body);
 		res.send({ message: 'Pedido Creado!' });
 	} catch (err) {
@@ -53,7 +51,6 @@ router.post('/usuarios', async (req, res) => {
 			usuarioNuevo,
 			req.body.password,
 		);
-		passport.authenticate('local');
 		const {
 			_id,
 			nombre,

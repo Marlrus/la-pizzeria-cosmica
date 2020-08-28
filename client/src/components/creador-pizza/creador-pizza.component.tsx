@@ -85,7 +85,6 @@ const CreadorPizza: React.FC = () => {
 				data: body,
 			})
 				.then((res: { data: { message: string } }) => {
-					console.log(res);
 					alert(res.data.message);
 					setSubmit(false);
 					setNombre('');
@@ -99,8 +98,6 @@ const CreadorPizza: React.FC = () => {
 				});
 		}
 	}, [submit, nombre, telefono, pizza]);
-
-	console.log(autenticado);
 
 	return (
 		<div className='contenedor-creacion-pizza'>
