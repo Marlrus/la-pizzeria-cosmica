@@ -1,5 +1,5 @@
 export interface Pedido {
-	fecha: Date;
+	fecha: string;
 	nombre_cliente: string;
 	nombre_pizza: string;
 	precio: number;

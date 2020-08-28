@@ -4,7 +4,13 @@ import { Pedido } from '../../types/pedido.types';
 
 import './dashboard.styles.scss';
 import TablaDetalles from '../../components/tabla-detalles/tabla-detalles';
-import { formatearPedidos, filter, pipe } from '../../utils/utils';
+import {
+	formatearPedidos,
+	filter,
+	pipe,
+	parseFechaString,
+	crearFecha,
+} from '../../utils/utils';
 
 interface Response {
 	data: Pedido[];
@@ -12,9 +18,11 @@ interface Response {
 
 const Dashboard: React.FC = () => {
 	const [pedidosState, setPedidos] = useState([] as Pedido[]);
-	const [cliente, setCliente] = useState('');
-	const [precioMin, setPrecioMin] = useState(0);
-	const [precioMax, setPrecioMax] = useState(10000000000000);
+	const [cliente, setCliente] = useState<null | string>(null);
+	const [precioMin, setPrecioMin] = useState<null | number>(null);
+	const [precioMax, setPrecioMax] = useState<null | number>(null);
+	const [fechaInicial, setFechaInicial] = useState<null | string>(null);
+	const [fechaFinal, setFechaFinal] = useState<null | string>(null);
 
 	useEffect(() => {
 		axios({
@@ -33,18 +41,36 @@ const Dashboard: React.FC = () => {
 		'telefono',
 	];
 
-	const filtrarPorNombre = (pedido: Pedido) =>
-		pedido.nombre_cliente.toLowerCase().includes(cliente.toLowerCase());
-	const filtrarPorMin = (pedido: Pedido) => pedido.precio > precioMin;
-	const filtrarPorMax = (pedido: Pedido) => pedido.precio < precioMax;
-
+	const porNombre = (pedido: Pedido) =>
+		pedido.nombre_cliente
+			.toLowerCase()
+			.includes(cliente ? cliente.toLowerCase() : '');
+	const porPrecioMin = (pedido: Pedido) => pedido.precio > (precioMin ?? 0);
+	const porPrecioMax = (pedido: Pedido) =>
+		pedido.precio < (precioMax ?? 10000000000000);
+	const porFechaMin = (pedido: Pedido) =>
+		crearFecha(parseFechaString(pedido.fecha)) >=
+		crearFecha(fechaInicial ?? '1900-01-01');
+	const porFechaMax = (pedido: Pedido) =>
+		crearFecha(parseFechaString(pedido.fecha)) <=
+		crearFecha(fechaFinal ?? '9999-01-01');
 	const filtroCompleto = pipe<Pedido[], Pedido[]>(
-		filter(filtrarPorNombre),
-		filter(filtrarPorMin),
-		filter(filtrarPorMax),
+		filter(porNombre),
+		filter(porPrecioMin),
+		filter(porPrecioMax),
+		filter(porFechaMin),
+		filter(porFechaMax),
 	);
 
 	const pedidos = filtroCompleto(pedidosState);
+
+	const resetearFiltro = () => {
+		setCliente(null);
+		setPrecioMin(null);
+		setPrecioMax(null);
+		setFechaInicial(null);
+		setFechaFinal(null);
+	};
 
 	return (
 		<div>
@@ -56,6 +82,7 @@ const Dashboard: React.FC = () => {
 						<label>Cliente</label>
 						<input
 							type='text'
+							value={cliente ?? ''}
 							onChange={e => setCliente(e.target.value)}
 						/>
 					</div>
@@ -63,6 +90,7 @@ const Dashboard: React.FC = () => {
 						<label>Precio Minimo</label>
 						<input
 							type='number'
+							value={precioMin ?? ''}
 							onChange={e => setPrecioMin(+e.target.value)}
 						/>
 					</div>
@@ -70,9 +98,29 @@ const Dashboard: React.FC = () => {
 						<label>Precio Maximo</label>
 						<input
 							type='number'
+							value={precioMax ?? ''}
 							onChange={e => setPrecioMax(+e.target.value)}
 						/>
 					</div>
+					<div>
+						<label>Fecha Inicial</label>
+						<input
+							type='date'
+							value={fechaInicial ?? ''}
+							onChange={e => setFechaInicial(e.target.value)}
+						/>
+					</div>
+					<div>
+						<label>Fecha Final</label>
+						<input
+							type='date'
+							value={fechaFinal ?? ''}
+							onChange={e => setFechaFinal(e.target.value)}
+						/>
+					</div>
+				</div>
+				<div className='contenedor-borrar-filtro'>
+					<button onClick={resetearFiltro}>Resetear Filtro</button>
 				</div>
 				<div className='total-ventas'>
 					<table>

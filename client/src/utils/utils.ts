@@ -50,3 +50,8 @@ export const logger = <T>(x: T) => {
 	console.log(x);
 	return x;
 };
+
+export const parseFechaString = (fechaString: string) =>
+	fechaString.slice(0, 10);
+
+export const crearFecha = (dateString: string) => new Date(dateString);
