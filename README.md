@@ -22,9 +22,9 @@ yarn dev
 
 ### Usuarios para diferente tipo de acceso
 
-Para utilizar como Admin: **correo: julian.franco.f@gmail.com, contraseña: password.**
-Para utilizar como Usuario registrado: **Crear cuenta.**
-Para utilizar como Usuario no-registrado: **No crear cuenta.**
+-  Para utilizar como Admin: **correo: julian.franco.f@gmail.com, contraseña: password.**
+-  Para utilizar como Usuario registrado: **Crear cuenta.**
+-  Para utilizar como Usuario no-registrado: **No crear cuenta.**
 
 ## Paquetes Frontend Create React App
 
