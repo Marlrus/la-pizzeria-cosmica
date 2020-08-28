@@ -7,7 +7,7 @@ import Header from './components/header/header.component';
 import Dashboard from './pages/dashboard/dashboard';
 import PedidoDetalles from './pages/pedido-detalles/pedido-detalles.page';
 import UsuarioAuth from './pages/usuario-auth/usuario-auth.component';
-import ErrorBoundary from './components/error-boundary/error-boundary.component';
+// import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 import UserAuthContext from './contexts/user-auth/user-auth';
 import { UsuarioState } from './types/user-auth.types';
@@ -31,24 +31,22 @@ function App() {
 				<Header />
 			</UserAuthContext.Provider>
 			<Switch>
-				<ErrorBoundary>
+				<Route
+					exact
+					path='/pedidos'
+					render={() => (!admin ? <Redirect to='/' /> : <Dashboard />)}
+				/>
+				<Route path='/pedidos/:pedido_id' component={PedidoDetalles} />
+				<UserAuthContext.Provider value={{ ...usuario, setUsuario }}>
+					<Route exact path='/' component={HomePage} />
 					<Route
 						exact
-						path='/pedidos'
-						render={() => (!admin ? <Redirect to='/' /> : <Dashboard />)}
+						path='/usuarios'
+						render={() =>
+							autenticado ? <Redirect to='/' /> : <UsuarioAuth />
+						}
 					/>
-					<Route path='/pedidos/:pedido_id' component={PedidoDetalles} />
-					<UserAuthContext.Provider value={{ ...usuario, setUsuario }}>
-						<Route exact path='/' component={HomePage} />
-						<Route
-							exact
-							path='/usuarios'
-							render={() =>
-								autenticado ? <Redirect to='/' /> : <UsuarioAuth />
-							}
-						/>
-					</UserAuthContext.Provider>
-				</ErrorBoundary>
+				</UserAuthContext.Provider>
 			</Switch>
 		</div>
 	);

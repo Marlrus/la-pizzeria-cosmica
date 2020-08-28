@@ -75,7 +75,7 @@ const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 
 	return (
 		<div className='contenedor-crear-cuenta'>
-			<h2>No tengo cuenta todavia</h2>
+			<h2>No tengo cuenta todavía</h2>
 			<span>Crea una cuenta con tu correo y contraseña</span>
 			<form className='sign-up-form' onSubmit={handleSubmit}>
 				<InputFormulario
@@ -99,7 +99,7 @@ const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 					name='telefono'
 					value={telefono}
 					handleChange={handleCambio}
-					label='Telefono'
+					label='Teléfono '
 					required
 				/>
 				<InputFormulario

@@ -1,4 +1,10 @@
-import React, { useReducer, useEffect, FormEvent, useState } from 'react';
+import React, {
+	useReducer,
+	useEffect,
+	FormEvent,
+	useState,
+	useContext,
+} from 'react';
 import axios from 'axios';
 
 import './creador-pizza.styles.scss';
@@ -14,12 +20,16 @@ import {
 
 import { capitalizarPalabras } from '../../utils/utils';
 import { UsuarioDB } from '../../types/user-auth.types';
+import { Link } from 'react-router-dom';
+import UserAuthContext from '../../contexts/user-auth/user-auth';
 
 const CreadorPizza: React.FC = () => {
 	const [creadorState, dispatch] = useReducer(
 		creadorPizzaReducer,
 		stateInicial,
 	);
+
+	const { autenticado } = useContext(UserAuthContext);
 
 	const [submit, setSubmit] = useState(false);
 	const [nombre, setNombre] = useState('');
@@ -90,6 +100,8 @@ const CreadorPizza: React.FC = () => {
 		}
 	}, [submit, nombre, telefono, pizza]);
 
+	console.log(autenticado);
+
 	return (
 		<div className='contenedor-creacion-pizza'>
 			<h2>Crea tu Pizza</h2>
@@ -158,7 +170,7 @@ const CreadorPizza: React.FC = () => {
 							/>
 						</div>
 						<div className='input'>
-							<label htmlFor=''>Telefono</label>
+							<label htmlFor=''>Teléfono</label>
 							<br />
 							<input
 								value={telefono.toString()}
@@ -189,10 +201,20 @@ const CreadorPizza: React.FC = () => {
 						</div>
 					</div>
 					<br />
-					<button>Crear Pedido</button>
+					<button>Finalizar Pedido</button>
 					<p>{pedidoEnviado}</p>
 				</form>
-				<div id='crear-usuario'></div>
+				{!autenticado ? (
+					<div id='crear-usuario'>
+						<p>
+							Para pedidos futuros puedes automatizar el ingreso de datos
+							creando un usuario!
+							<br />
+							No te preocupes! Tu pedido no se perderá!
+						</p>
+						<Link to='/usuarios'>Crear Usuario</Link>
+					</div>
+				) : null}
 			</div>
 		</div>
 	);

@@ -24,18 +24,23 @@ const Dashboard: React.FC = () => {
 	const [precioMax, setPrecioMax] = useState<null | number>(null);
 	const [fechaInicial, setFechaInicial] = useState<null | string>(null);
 	const [fechaFinal, setFechaFinal] = useState<null | string>(null);
+	const [cargando, setCargando] = useState(true);
 
 	useEffect(() => {
 		axios({
 			url: '/pedidos',
 			method: 'get',
 			withCredentials: true,
-		}).then((res: Response) => setPedidos(res.data));
+		}).then((res: Response) => {
+			setCargando(false);
+			setPedidos(res.data);
+		});
 	}, []);
 
 	const cabezeras = ['Cliente', 'Fecha', 'Precio', 'Telefono'];
 	const orden = ['nombre_cliente', 'fecha', 'precio', 'telefono'];
 
+	//Filtros
 	const porNombre = (pedido: Pedido) =>
 		pedido.nombre_cliente
 			.toLowerCase()
@@ -49,6 +54,8 @@ const Dashboard: React.FC = () => {
 	const porFechaMax = (pedido: Pedido) =>
 		crearFecha(parseFechaString(pedido.fecha)) <=
 		crearFecha(fechaFinal ?? '9999-01-01');
+
+	//Composicion de filtros
 	const filtroCompleto = pipe<Pedido[], Pedido[]>(
 		filter(porNombre),
 		filter(porPrecioMin),
@@ -82,7 +89,7 @@ const Dashboard: React.FC = () => {
 						/>
 					</div>
 					<div>
-						<label>Precio Minimo</label>
+						<label>Precio Mínimo</label>
 						<input
 							type='number'
 							value={precioMin ?? ''}
@@ -90,7 +97,7 @@ const Dashboard: React.FC = () => {
 						/>
 					</div>
 					<div>
-						<label>Precio Maximo</label>
+						<label>Precio Máximo</label>
 						<input
 							type='number'
 							value={precioMax ?? ''}
@@ -115,10 +122,10 @@ const Dashboard: React.FC = () => {
 					</div>
 				</div>
 				<div className='contenedor-borrar-filtro'>
-					<button onClick={resetearFiltro}>Resetear Filtro</button>
+					<button onClick={resetearFiltro}>Reiniciar Filtros</button>
 				</div>
 				<div className='total-ventas'>
-					{pedidos.length > 0 ? (
+					{!cargando ? (
 						<table>
 							<tbody>
 								<tr>

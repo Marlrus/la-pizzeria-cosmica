@@ -20,7 +20,11 @@ cd client yarn install
 yarn dev
 ```
 
-Para utilizar como Admin correo: julian.franco.f@gmail.com, contraseña: password.
+### Usuarios para diferente tipo de acceso
+
+Para utilizar como Admin: **correo: julian.franco.f@gmail.com, contraseña: password.**
+Para utilizar como Usuario registrado: **Crear cuenta.**
+Para utilizar como Usuario no-registrado: **No crear cuenta.**
 
 ## Paquetes Frontend Create React App
 
@@ -56,15 +60,15 @@ No seria necesario para identificar la pizza porque al crear un documento en la 
 
 **Dashboard: Pedidos a lo largo del tiempo?**
 
-Para este ejemplo no serian miles, pero en un caso de muchos datos tocaria configurar el API para paginacion de datos y crear vistas mas practicas con colecciones de datos derivadas de los pedidos tales como: semanas, meses, años, con detalles de totales derivados de los pedidos. En un servicio normal se volveria inviable rapidamente. Con MongoDB se pueden construir estas estructuras con mucha facilidad y actualizar con un CRON job.
+Para este ejemplo no serian miles, pero en un caso de muchos datos tocaria configurar el API para paginacion de datos y crear vistas mas practicas con colecciones de datos derivadas de los pedidos tales como: semanas, meses, años, con detalles de totales derivados de los pedidos. En un servicio normal se volveria inviable rapidamente. Con MongoDB se pueden construir estas estructuras de datos con mucha facilidad y actualizar con un CRON job. En ese caso tocaria implementar varios dashboards. Se pueden utilizar los patrones de datos para usos especiales que estan en su Blog.
 
 **Dashboard: Detalle**
 
 En el Show del dashboard se tendra una lista de pedidos con casi toda la informacion disponible desde esa vista. Para tener informacion adicional en la vista de detalle toca guardar la informacion de los ingredientes de la pizza.
 
-**Como cuajaria toda esta idea?**
+**Como cuajaria toda esta idea y el nombre de las pizzas?**
 
-La pizzeria es una pizzeria con un angulo futuristico por lo cual utiliza nombres comicos para las pizzas.
+La pizzeria es una pizzeria con un angulo espacial/futuristico por lo cual utiliza nombres comicos para las pizzas. Una pizza sin nombre es pizza del pasado, la del futuro es la del nombre generado.
 
 ### Creador de Pizza
 
@@ -99,6 +103,10 @@ Si, si el usuario navega a cualquier otra parte de la pagina se re-setearia el e
 **Refactoro ahora o despues?**
 
 Subestime el alcance de lo que necesitaba hacer esta pagina y me quedo un componente muy grande y complejo. Podria re-factorar y quebrar, pero mejor continuar con el resto de la funcionalidad y regresas a re-factorar si hay tiempo y se vuelve en un inpedimento en algun momento.
+
+**Donde colocar el boton de crear usuario?**
+
+Mejor colocarlo al final del pedido para no impedir que el cliente haga su pedido, y si desea automatizar el proceso puede crear un usuario. Los datos del formulario de la pizza no se pierden porque persisten. El boton de crear usuario debe ser mas llamativo pporque queremos que se creen usuarios para tener mas datos en le funturo.
 
 ### Backend
 
@@ -159,6 +167,18 @@ El lado administrativo es altamente sencillo, no vale la pena desplegar una apli
 **Que datos se pueden derivar de los datos que ya estan disponibles?**
 
 Se pueden reducir en los pedidos datos como la cantidad de ingredientes de la pizza. Y en la vista show se puede reducir la cantidad de pedidos totales. Se podrian agregar unos filtros para los datos.
+
+**Que informacion es relevante para el Dashboard general?**
+
+El nombre de la pizza no es importante y se puede incluir en el detalle. Datos importantes serian el nombre del cliente, la fecha, el preico y el telefono. Informacion adicional en la vista de detalles.
+
+**Cuales son los mejores filtros?**
+
+Filtrar por nombre de cliente, rango de precio, y por rango de fecha. De esta forma se puede derivar la informacion que se reduce de todos los pedidos (total, numero de pedidos) en diferentes rangos. Combinar los filtros nos ofrece mucha flexibilidad para derivar informacion de los datos.
+
+**Cual sera la manera mas limpia de implementar los filtros?**
+
+Con tanta logica se puede poner desordenado muy rapido. Como es procesamiento de datos, la tarea ideal para composicion de funciones. Si importo pipe, y filter de la libreria que estaba haciendo quedaria mas limpio y escalable. Colocar esas funciones un utils.ts
 
 ### Autenticacion en el Frontend
 

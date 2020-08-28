@@ -114,16 +114,16 @@
 			padding-bottom: 0.8em;
 			padding-left: 1.5em;
 			padding-right: 1.5em;
-			background-color: #663399;
-			color: white;
+			background-color: #ffffff;
+			color: rgb(0, 0, 0);
 			font-size: 20px;
-			border: unset;
+			border: 2px solid rgb(170, 170, 170);
 			border-radius: 2em;
 			font-weight: bold;
 			cursor: pointer;
 
 			&:hover {
-				background-color: rgb(97, 0, 201);
+				background-color: rgb(155, 155, 155);
 			}
 		}
 
@@ -131,6 +131,33 @@
 			margin-top: 1em;
 			font-size: 20px;
 			color: green;
+		}
+
+		#crear-usuario {
+			padding-bottom: 1em;
+			margin-bottom: 1em;
+
+			p {
+				color: black;
+				margin-bottom: 2em;
+			}
+			a {
+				padding-top: 1em;
+				padding-bottom: 1em;
+				padding-left: 2em;
+				padding-right: 2em;
+				background-color: #663399;
+				color: white;
+				font-size: 20px;
+				border: unset;
+				border-radius: 2em;
+				font-weight: bold;
+				cursor: pointer;
+
+				&:hover {
+					background-color: rgb(97, 0, 201);
+				}
+			}
 		}
 	}
 }
