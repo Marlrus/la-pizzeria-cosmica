@@ -123,7 +123,7 @@ const Dashboard: React.FC = () => {
 							<tbody>
 								<tr>
 									<td>
-										<strong>Total En Ventas Filtradas: </strong>$
+										<strong>Total En Pedidos Filtrados: </strong>$
 										{pedidos
 											.reduce(
 												(total, pedido) => (total += pedido.precio),
@@ -132,7 +132,7 @@ const Dashboard: React.FC = () => {
 											.toLocaleString()}
 									</td>
 									<td>
-										<strong>Numero de Ventas: </strong>
+										<strong>Numero de Pedidos: </strong>
 										{pedidos.length}
 									</td>
 								</tr>
