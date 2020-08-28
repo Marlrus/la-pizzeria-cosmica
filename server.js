@@ -7,10 +7,23 @@ const http = require('http');
 const enforce = require('express-sslify');
 const mongoose = require('mongoose');
 const routes = require('./routes/index.routes');
+const passport = require('passport');
+const cookieSession = require('cookie-session');
 
 require('dotenv').config();
 
 const app = express();
+
+//COOKIE SESSION CONFIG
+app.use(
+	cookieSession({
+		name: 'pizzeria-cosmica-sesion',
+		keys: ['Esto iria en variables de ambiente'],
+		//Cookie Option
+		maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
+		expires: new Date(2100, 1, 1),
+	}),
+);
 
 //Body Parser Setup
 app.use(compression());
@@ -19,6 +32,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Cross Origin Request
 app.use(cors());
+
+//Passport Setup
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./authConfig/local-passport-setup');
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(enforce.HTTPS({ trustProtoHeader: true }));

@@ -183,6 +183,7 @@ const CreadorPizza: React.FC = () => {
 					<button>Crear Pedido</button>
 					<p>{pedidoEnviado}</p>
 				</form>
+				<div id='crear-usuario'></div>
 			</div>
 		</div>
 	);

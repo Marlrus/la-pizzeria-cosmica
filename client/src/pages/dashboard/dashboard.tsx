@@ -17,6 +17,7 @@ const Dashboard: React.FC = () => {
 		axios({
 			url: '/pedidos',
 			method: 'get',
+			withCredentials: true,
 		}).then((res: Response) => setPedidos(res.data));
 	}, []);
 
