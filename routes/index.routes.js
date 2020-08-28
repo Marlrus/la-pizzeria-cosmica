@@ -13,7 +13,6 @@ router.get('/service-worker.js', (req, res) => {
 
 router.get('/pedidos', middleware.authCheck, async (req, res) => {
 	try {
-		console.log('En pedidos GET');
 		const pedidos = await Pedido.find({});
 		if (!pedidos) throw err;
 		res.send(pedidos);
@@ -47,7 +46,6 @@ router.post('/pedidos', middleware.authCheck, async (req, res) => {
 });
 
 //USUARIO
-
 router.post('/usuarios', async (req, res) => {
 	try {
 		const usuarioNuevo = new Usuario(req.body);
@@ -55,7 +53,15 @@ router.post('/usuarios', async (req, res) => {
 			usuarioNuevo,
 			req.body.password,
 		);
-		const { _id, nombre, email, telefono, pedidos_id, admin } = req.user;
+		passport.authenticate('local');
+		const {
+			_id,
+			nombre,
+			email,
+			telefono,
+			pedidos_id,
+			admin,
+		} = usuarioRegistrado;
 		res.send({
 			_id,
 			nombre,
@@ -64,7 +70,6 @@ router.post('/usuarios', async (req, res) => {
 			pedidos_id,
 			admin,
 		});
-		res.redirect('/usuarios/login');
 	} catch (err) {
 		res.status(400);
 		res.send(err.message);

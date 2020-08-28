@@ -67,9 +67,9 @@ const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 			.catch(err => alert(err));
 	};
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
-
+	const handleCambio = (event: React.ChangeEvent<HTMLInputElement>) => {
+		let { name, value } = event.target;
+		if (name === 'nombre') value = value.replace(/[^A-Za-z ]/gi, '');
 		setCredenciales({ ...credenciales, [name]: value });
 	};
 
@@ -82,7 +82,7 @@ const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 					type='text'
 					name='nombre'
 					value={nombre}
-					handleChange={handleChange}
+					handleChange={handleCambio}
 					label='Nombre'
 					required
 				/>
@@ -90,7 +90,7 @@ const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 					type='email'
 					name='email'
 					value={email}
-					handleChange={handleChange}
+					handleChange={handleCambio}
 					label='Email'
 					required
 				/>
@@ -98,7 +98,7 @@ const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 					type='number'
 					name='telefono'
 					value={telefono}
-					handleChange={handleChange}
+					handleChange={handleCambio}
 					label='Telefono'
 					required
 				/>
@@ -106,7 +106,7 @@ const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 					type='password'
 					name='password'
 					value={password}
-					handleChange={handleChange}
+					handleChange={handleCambio}
 					label='Contraseña'
 					required
 				/>
@@ -114,7 +114,7 @@ const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 					type='password'
 					name='confirmarPassword'
 					value={confirmarPassword}
-					handleChange={handleChange}
+					handleChange={handleCambio}
 					label='Confirma Contraseña'
 					required
 				/>

@@ -11,6 +11,7 @@ import {
 	parseFechaString,
 	crearFecha,
 } from '../../utils/utils';
+import Spinner from '../../components/spinner/spinner.component';
 
 interface Response {
 	data: Pedido[];
@@ -32,14 +33,8 @@ const Dashboard: React.FC = () => {
 		}).then((res: Response) => setPedidos(res.data));
 	}, []);
 
-	const cabezeras = ['Cliente', 'Fecha', 'Pizza', 'Precio', 'Telefono'];
-	const orden = [
-		'nombre_cliente',
-		'fecha',
-		'nombre_pizza',
-		'precio',
-		'telefono',
-	];
+	const cabezeras = ['Cliente', 'Fecha', 'Precio', 'Telefono'];
+	const orden = ['nombre_cliente', 'fecha', 'precio', 'telefono'];
 
 	const porNombre = (pedido: Pedido) =>
 		pedido.nombre_cliente
@@ -123,25 +118,29 @@ const Dashboard: React.FC = () => {
 					<button onClick={resetearFiltro}>Resetear Filtro</button>
 				</div>
 				<div className='total-ventas'>
-					<table>
-						<tbody>
-							<tr>
-								<td>
-									<strong>Total En Ventas Filtradas: </strong>$
-									{pedidos
-										.reduce(
-											(total, pedido) => (total += pedido.precio),
-											0,
-										)
-										.toLocaleString()}
-								</td>
-								<td>
-									<strong>Numero de Ventas: </strong>
-									{pedidos.length}
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					{pedidos.length > 0 ? (
+						<table>
+							<tbody>
+								<tr>
+									<td>
+										<strong>Total En Ventas Filtradas: </strong>$
+										{pedidos
+											.reduce(
+												(total, pedido) => (total += pedido.precio),
+												0,
+											)
+											.toLocaleString()}
+									</td>
+									<td>
+										<strong>Numero de Ventas: </strong>
+										{pedidos.length}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					) : (
+						<Spinner />
+					)}
 				</div>
 				<TablaDetalles
 					pedidos={formatearPedidos(pedidos)}

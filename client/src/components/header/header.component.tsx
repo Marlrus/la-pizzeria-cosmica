@@ -15,7 +15,6 @@ const Header: React.FC = () => {
 	const logoutHandler = () => setLogout(true);
 
 	useEffect(() => {
-		console.log('In effect');
 		if (logout) {
 			axios({
 				method: 'get',
