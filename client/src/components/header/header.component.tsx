@@ -9,8 +9,10 @@ import UserAuthContext from '../../contexts/user-auth/user-auth';
 
 const Header: React.FC = () => {
 	const [logout, setLogout] = useState(false);
-	const { admin, autenticado } = useContext(UserAuthContext);
-	console.log(admin, autenticado);
+	const usuario = useContext(UserAuthContext);
+	const { admin, autenticado, setUsuario } = usuario;
+
+	console.log(usuario);
 
 	const logoutHandler = () => setLogout(true);
 
@@ -22,11 +24,17 @@ const Header: React.FC = () => {
 				url: '/usuarios/logout',
 				withCredentials: true,
 			})
-				.then(res => localStorage.removeItem('user-session'))
+				.then(res => {
+					localStorage.removeItem('user-state');
+					setUsuario!({
+						autenticado: false,
+						admin: false,
+					});
+				})
 				.catch(err => console.log(err));
 		}
 		setLogout(false);
-	}, [logout]);
+	}, [logout, setUsuario]);
 
 	return (
 		<header className='header-container'>
@@ -42,14 +50,13 @@ const Header: React.FC = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to={'/usuarios'}>Entrar a Cuenta</Link>
-					</li>
-					<li>
-						{autenticado ? (
+						{autenticado === true ? (
 							<Link to={'/'} onClick={logoutHandler}>
 								Salir de Cuenta
 							</Link>
-						) : null}
+						) : (
+							<Link to={'/usuarios'}>Entrar a Cuenta</Link>
+						)}
 					</li>
 					{admin ? (
 						<li>

@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import InputFormulario from '../input-formulario/input-formulario.component';
 
 import './crear-cuenta.styles.scss';
 import axios from 'axios';
+import { UsuarioDB } from '../../types/user-auth.types';
+import UsuarioAuthContext from '../../contexts/user-auth/user-auth';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface CrearCuentaState {
 	[name: string]: string;
@@ -14,7 +17,11 @@ interface CrearCuentaState {
 	telefono: string;
 }
 
-const CrearCuenta: React.FC = () => {
+interface UsuarioDBRes {
+	data: UsuarioDB;
+}
+
+const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 	const [credenciales, setCredenciales] = useState<CrearCuentaState>({
 		nombre: '',
 		email: '',
@@ -31,6 +38,10 @@ const CrearCuenta: React.FC = () => {
 		telefono,
 	} = credenciales;
 
+	const usuarioContext = useContext(UsuarioAuthContext);
+	// console.log(usuarioContext);
+	const { setUsuario } = usuarioContext;
+
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
@@ -38,13 +49,22 @@ const CrearCuenta: React.FC = () => {
 			return alert(`Las contraseñas no son iguales.`);
 		}
 
-		console.log('efecto');
-		console.log({ email, password, nombre });
 		axios({
 			method: 'post',
 			url: '/usuarios',
 			data: credenciales,
-		}).then(res => console.log(res));
+		})
+			.then((res: UsuarioDBRes) => {
+				const userData = {
+					...res.data,
+					autenticado: true,
+					admin: res.data.admin,
+				};
+				setUsuario!(userData);
+				localStorage.setItem('usuario-state', JSON.stringify(userData));
+				history.push('/');
+			})
+			.catch(err => alert(err));
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,8 +72,6 @@ const CrearCuenta: React.FC = () => {
 
 		setCredenciales({ ...credenciales, [name]: value });
 	};
-
-	console.log(credenciales);
 
 	return (
 		<div className='contenedor-crear-cuenta'>
@@ -108,4 +126,4 @@ const CrearCuenta: React.FC = () => {
 	);
 };
 
-export default CrearCuenta;
+export default withRouter(CrearCuenta);

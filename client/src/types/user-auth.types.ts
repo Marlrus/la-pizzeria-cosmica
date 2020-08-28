@@ -1,4 +1,4 @@
-export interface User {
+export interface UsuarioDB {
 	admin: boolean;
 	email: string;
 	nombre: string;
@@ -6,3 +6,11 @@ export interface User {
 	telefono: string;
 	_id: string;
 }
+
+interface AuthStatus {
+	autenticado: boolean;
+	admin: boolean;
+	setUsuario?: Function;
+}
+
+export type UsuarioState = (UsuarioDB & AuthStatus) | AuthStatus;

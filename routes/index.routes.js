@@ -35,8 +35,8 @@ router.get('/pedidos/:_id', async (req, res) => {
 
 router.post('/pedidos', middleware.authCheck, async (req, res) => {
 	try {
-		console.log('req.user._id');
-		console.log(req.user._id);
+		// console.log('req.user._id');
+		// console.log(req.user._id);
 		await Pedido.create(req.body);
 		res.send({ message: 'Pedido Creado!' });
 	} catch (err) {
@@ -54,11 +54,16 @@ router.post('/usuarios', async (req, res) => {
 			usuarioNuevo,
 			req.body.password,
 		);
-		console.log(usuarioNuevo);
-		console.log(usuarioRegistrado);
-		passport.authenticate('local', (req, res) => {
-			res.send(res);
+		const { _id, nombre, email, telefono, pedidos_id, admin } = req.user;
+		res.send({
+			_id,
+			nombre,
+			email,
+			telefono,
+			pedidos_id,
+			admin,
 		});
+		res.redirect('/usuarios/login');
 	} catch (err) {
 		res.status(400);
 		res.send(err.message);
@@ -84,7 +89,6 @@ router.post('/usuarios/login', passport.authenticate('local'), (req, res) => {
 
 router.get('/usuarios/logout', middleware.authCheck, (req, res) => {
 	try {
-		console.log('in route');
 		req.logout();
 		res.send('/');
 	} catch (err) {

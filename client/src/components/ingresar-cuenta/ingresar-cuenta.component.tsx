@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import InputFormulario from '../input-formulario/input-formulario.component';
 
 import './ingresar-cuenta.styles.scss';
 import axios from 'axios';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import UsuarioAuthContext from '../../contexts/user-auth/user-auth';
+import { UsuarioDB } from '../../types/user-auth.types';
 
 interface Credenciales {
 	[key: string]: string;
+}
+
+interface UsuarioDBRes {
+	data: UsuarioDB;
 }
 
 const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
@@ -17,6 +23,10 @@ const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 	});
 
 	const { email, password } = credenciales;
+
+	const usuarioContext = useContext(UsuarioAuthContext);
+	// console.log(usuarioContext);
+	const { setUsuario } = usuarioContext;
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
@@ -31,9 +41,14 @@ const CrearCuenta: React.FC<RouteComponentProps> = ({ history }) => {
 			url: '/usuarios/login',
 			data: credenciales,
 		})
-			.then(res => {
-				console.log(res);
-				localStorage.setItem('user-session', JSON.stringify(res.data));
+			.then((res: UsuarioDBRes) => {
+				const userData = {
+					...res.data,
+					autenticado: true,
+					admin: res.data.admin,
+				};
+				setUsuario!(userData);
+				localStorage.setItem('usuario-state', JSON.stringify(userData));
 				history.push('/');
 			})
 			.catch(err => alert(err));
